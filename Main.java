@@ -13,25 +13,31 @@ public class Main {
             bw.append("Hello" + ",");
             bw.append("There");
             bw.newLine();
-            bw.append("HOLY,FUCKING,SHIT,BALLS");
-            bw.flush();
+            bw.append("HOLY,FUCKING,SHIT,IT,WORKS");
             bw.newLine();
             bw.flush();
             File f = new File(fiile);
             Scanner reader = new Scanner(f);
             while(reader.hasNextLine()){
-                System.out.println(reader.nextLine());
+                String[] currLine = reader.nextLine().split(",");
+                for(int i = 0; i < currLine.length; i++){
+                    System.out.print(currLine[i] + " ");
+                }
+                System.out.println();
             }
         }catch(Exception e){
+
             System.out.println(e.getMessage());
         }
 
     }
     public static String getDir(){
         String dir = System.getProperty("user.dir");
-        while(!dir.substring(dir.length() - 1, dir.length()).equals("\\")){
+        //commented code removes last portion of the running file's directory, allowing you to put the csv one level upward
+        /*while(!dir.substring(dir.length() - 1, dir.length()).equals("\\")){
             dir = dir.substring(0, dir.length() - 1);
         }
-        return dir;
+        */
+        return dir + "\\";
     }
 }
