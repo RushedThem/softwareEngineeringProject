@@ -1,34 +1,33 @@
 import java.io.*;
 import java.util.*;
+import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
+        java.util.Date date= new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int month = cal.get(Calendar.MONTH) + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
         String dir = getDir();
+        String fiile = dir + "datastoragesheet" + month + ".csv";
 
-        System.out.println(dir);
-        String fiile = dir + "datastoragesheet.csv";
-        System.out.println(fiile);
-        try {
-            FileWriter fw = new FileWriter(fiile, true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.append("Hello" + ",");
-            bw.append("There");
-            bw.newLine();
-            bw.append("HOLY,FUCKING,SHIT,IT,WORKS");
-            bw.newLine();
-            bw.flush();
+
+        try{
             File f = new File(fiile);
-            Scanner reader = new Scanner(f);
-            while(reader.hasNextLine()){
-                String[] currLine = reader.nextLine().split(",");
-                for(int i = 0; i < currLine.length; i++){
-                    System.out.print(currLine[i] + " ");
-                }
-                System.out.println();
-            }
-        }catch(Exception e){
-
-            System.out.println(e.getMessage());
+            Scanner filereader = new Scanner(f);
         }
+        catch(Exception e){
+            try{
+                createFile(fiile, month, day);
+            }
+            catch(Exception err){
+                System.out.println(err.getMessage());
+            }
+        }
+        ArrayList<String[]>data = readFile(fiile);
+        printData(data);
+
 
     }
     public static String getDir(){
@@ -39,5 +38,57 @@ public class Main {
         }
         */
         return dir + "\\";
+    }
+    /*
+    @param fi, the string name of the file to be created
+    @param month, the currrent month of the year
+    @param day, the current day of the month
+    this method forces the creation of a new csv, then asks for some baseline information before recording it in the new file
+     */
+    public static void createFile(String fi, int month, int day){
+        System.out.println("start creatFile");
+        try {
+            FileWriter fw = new FileWriter(fi, true);
+            Scanner input = new Scanner(System.in);
+            System.out.print("Name: ");
+            String name = input.nextLine();
+            System.out.print("Starting $: ");
+            int start = input.nextInt();
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.append(name + "," + start);
+            bw.newLine();
+            bw.append(month + "," + day);
+            bw.flush();
+            bw.close();
+
+        }catch(Exception e){
+
+            System.out.println(e.getMessage());
+        }
+    }
+    public static ArrayList<String[]> readFile(String fi){
+        ArrayList<String[]> data = new ArrayList<String[]>();
+        try{
+            File f = new File(fi);
+            Scanner reader = new Scanner(f);
+            while(reader.hasNextLine()){
+                data.add(reader.nextLine().split(","));
+
+            }
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return data;
+    }
+    public static void printData(ArrayList<String[]> arr){
+
+        for(int i = 0; i < arr.size(); i++){
+            String[] currline = arr.get(i);
+            for(int j = 0; j < currline.length; j++){
+                System.out.print(currline[j] + "  ");
+            }
+            System.out.println();
+        }
     }
 }
