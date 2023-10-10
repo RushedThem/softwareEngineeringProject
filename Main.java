@@ -25,10 +25,24 @@ public class Main {
                 System.out.println(err.getMessage());
             }
         }
+
+        ArrayList<EventNodeTest> testnodes = new ArrayList<EventNodeTest>();
+        testnodes.add(new EventNodeTest(month, day, "rent", 1500.25, true, "debit", "Paid rent "));
+        try {
+            FileWriter fw = new FileWriter(fiile, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.append(testnodes.get(0).getInfo());
+            bw.newLine();
+
+            bw.flush();
+            bw.close();
+
+        }catch(Exception e){
+
+            System.out.println(e.getMessage());
+        }
         ArrayList<String[]>data = readFile(fiile);
         printData(data);
-
-
     }
     public static String getDir(){
         String dir = System.getProperty("user.dir");
@@ -57,7 +71,6 @@ public class Main {
             BufferedWriter bw = new BufferedWriter(fw);
             bw.append(name + "," + start);
             bw.newLine();
-            bw.append(month + "," + day);
             bw.flush();
             bw.close();
 
