@@ -1,5 +1,3 @@
-package src.main.java;
-
 public class EventNodeTest {
     private int month;
     private int day;
