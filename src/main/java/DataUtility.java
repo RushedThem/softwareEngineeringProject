@@ -138,5 +138,23 @@ public class DataUtility {
 
         return budget;
     }
+ /** method that uses a thread to call the saveData() method(which will just write the nodes and budget to the JSON file) every 5 mins
+ */
+ 
+ public class MultiThread extends Thread {
+
+    @Override
+    public void run() {
+        while (true) {
+            updateAll(ArrayList < EventNodeTest > nodes, double budget);
+
+            try {
+                Thread.sleep(300000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+}
 
 }
